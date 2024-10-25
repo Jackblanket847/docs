@@ -6,9 +6,9 @@ redirect_from:
   - /actions/guides/building-and-testing-java-with-ant
   - /actions/automating-builds-and-tests/building-and-testing-java-with-ant
 versions:
-  fpt: '*'
-  ghes: '*'
-  ghec: '*'
+  fpt: '*/docs.fpt'
+  ghes: '*/docs.ghes'
+  ghec: '*/docs.ghec'
 type: tutorial
 topics:
   - CI
@@ -17,19 +17,19 @@ topics:
 shortTitle: Build & test Java & Ant
 ---
 
-{% data reusables.actions.enterprise-github-hosted-runners %}
+*{% data reusables.actions.enterprise-github-hosted-runners %}
 
 ## Introduction
 
 This guide shows you how to create a workflow that performs continuous integration (CI) for your Java project using the Ant build system. The workflow you create will allow you to see when commits to a pull request cause build or test failures against your default branch; this approach can help ensure that your code is always healthy. You can extend your CI workflow to upload artifacts from a workflow run.
 
-{% data variables.product.prodname_dotcom %}-hosted runners have a tools cache with pre-installed software, which includes Java Development Kits (JDKs) and Ant. For a list of software and the pre-installed versions for JDK and Ant, see "[AUTOTITLE](/actions/using-github-hosted-runners/about-github-hosted-runners#supported-software)".
+{% data variables.product.prodname_dotcom %}-hosted runners have a tools cache with pre-installed software, which includes Java Development Kits (JDKs) and Ant. For a list of software and the pre-installed versions for JDK and Ant, see "[/actions/using-github-hosted-runners/about-github-hosted-runners#supported-software](/actions/using-github-hosted-runners/about-github-hosted-runners#supported-software)".
 
 ## Prerequisites
 
 You should be familiar with YAML and the syntax for {% data variables.product.prodname_actions %}. For more information, see:
-* "[AUTOTITLE](/actions/using-workflows/workflow-syntax-for-github-actions)"
-* "[AUTOTITLE](/actions/learn-github-actions)"
+* "[/actions/using-workflows/workflow-syntax-for-github-actions](/actions/using-workflows/workflow-syntax-for-github-actions)"
+* "[/actions/learn-github-actions](/actions/learn-github-actions)"
 
 We recommend that you have a basic understanding of Java and the Ant framework. For more information, see the [Apache Ant Manual](https://ant.apache.org/manual/).
 
@@ -64,17 +64,20 @@ We recommend that you have a basic understanding of Java and the Ant framework. 
      build:
        runs-on: ubuntu-latest
 
-       steps:
-       - uses: {% data reusables.actions.action-checkout %}
-       - name: Set up JDK 11
-         uses: {% data reusables.actions.action-setup-java %}
-         with:
-           java-version: '11'
-           distribution: 'temurin'
-       - name: Build with Ant
-         run: ant -noinput -buildfile build.xml
-   ```
-
+steps:
+  - uses: actions/checkout@v4
+  - name: Set up JDK 11 for x64
+    uses: actions/setup-java@v4
+    with:
+      java-version: '11'
+      distribution: 'temurin'
+      architecture: x64
+  - name: Run the Ant jar target
+  - run: ant -noinput -buildfile build-ci.xml jar
+  - uses: actions/upload-artifact@v4
+    with:
+      name: Package
+      path: build/jar
 {%- endif %}
 
 1. Edit the workflow as required. For example, change the Java version.
@@ -84,7 +87,7 @@ We recommend that you have a basic understanding of Java and the Ant framework. 
    The `ant.yml` workflow file is added to the `.github/workflows` directory of your repository.
 {% endif %}
 
-{% data reusables.actions.java-jvm-architecture %}
+{% data reusables.actions.java-jvm-architecture %}(
 
 ## Building and testing your code
 
@@ -102,25 +105,28 @@ steps:
       java-version: '17'
       distribution: 'temurin'
   - name: Run the Ant jar target
-    run: ant -noinput -buildfile build-ci.xml jar
-```
+  - run: ant -noinput -buildfile build-ci.xml jar
+  - uses: actions/upload-artifact@v4
+    with:
+      name: Package
+      path: build/jar
 
 ## Packaging workflow data as artifacts
 
-After your build has succeeded and your tests have passed, you may want to upload the resulting Java packages as a build artifact. This will store the built packages as part of the workflow run, and allow you to download them. Artifacts can help you test and debug pull requests in your local environment before they're merged. For more information, see "[AUTOTITLE](/actions/using-workflows/storing-workflow-data-as-artifacts)."
+After your build has succeeded and your tests have passed, you may want to upload the resulting Java packages as a build artifact. This will store the built packages as part of the workflow run, and allow you to download them. Artifacts can help you test and debug pull requests in your local environment before they're merged. For more information, see "[/actions/using-workflows/storing-workflow-data-as-artifacts](/actions/using-workflows/storing-workflow-data-as-artifacts)."
 
 Ant will usually create output files like JARs, EARs, or WARs in the `build/jar` directory. You can upload the contents of that directory using the `upload-artifact` action.
 
 ```yaml copy
 steps:
-  - uses: {% data reusables.actions.action-checkout %}
-  - uses: {% data reusables.actions.action-setup-java %}
+  - uses: {% data reusables.actions.action-checkout %} actions/checkout@v4;
+  - uses: {% data reusables.actions.action-setup-java %} actions/setup-java@v4;
     with:
       java-version: '17'
       distribution: 'temurin'
 
   - run: ant -noinput -buildfile build.xml
-  - uses: {% data reusables.actions.action-upload-artifact %}
+  - uses: {% data reusables.actions.action-upload-artifact %} actions/upload-artifact@v4;
     with:
       name: Package
       path: build/jar

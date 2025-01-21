@@ -42,7 +42,7 @@ Thank you for using GitHub! We're happy you're here. Please read this Terms of S
 
 ## The GitHub Terms of Service
 
-Effective date: November 16, 2020
+Effective date: November 16, 2024
 
 ## A. Definitions
 

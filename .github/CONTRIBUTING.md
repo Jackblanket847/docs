@@ -93,3 +93,32 @@ This site can be developed on Windows, however a few potential gotchas need to b
 4. Filename too long error: There is a 260 character limit for a filename when Git is compiled with `msys`. While the suggestions below are not guaranteed to work and could cause other issues, a few workarounds include:
     - Update Git configuration: `git config --system core.longpaths true`
     - Consider using a different Git client on Windows
+## Funding Orcid
+
+{
+    "country": {"resource": "http://sws.geonames.org/6695072/"},
+    "address": {"postalAddress": {"addressCountry": "eue"}},
+    "inScheme": {"resource": "http://data.crossref.org/fundingdata/vocabulary"},
+    "created": "2011-06-08T16:00:03.0",
+    "prefLabel": {"Label": {
+        "literalForm": {
+            "lang": "en",
+            "content": "European Commission"
+        },
+        "about": "http://data.crossref.org/fundingdata/vocabulary/Label-31893"
+    }},
+    "narrower": [
+        {"resource": "http://dx.doi.org/10.13039/100018708"},
+        {"resource": "http://dx.doi.org/10.13039/100010661"},
+        # ... other narrower concepts ...
+    ],
+    "modified": "2024-08-28T02:31:52.0",
+    "altLabel": [
+        # ... alternate labels ...
+    ],
+    "id": "https://doi.org/10.13039/501100000780",
+    "region": "Europe",
+    "fundingBodyType": "gov",
+    "fundingBodySubType": "National government",
+    "dunsNumber": "119434216"  # DUNS number
+}

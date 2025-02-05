@@ -1,4 +1,4 @@
----
+'''
 title: Site policy documentation
 shortTitle: Site policy
 redirect_from:
@@ -19,5 +19,5 @@ children:
   - /security-policies
   - /github-company-policies
   - /site-policy-deprecated
----
+'''
 

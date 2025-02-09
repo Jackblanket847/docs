@@ -148,4 +148,4 @@ To fix this, you can do one of the following things.
 
 ## Legal notice
 
-{% data reusables.actions.actions-runner-controller-legal-notice %}
+*     {% data reusables.actions.actions-runner-controller-legal-notice %}

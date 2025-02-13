@@ -4,7 +4,7 @@ shortTitle: Share automations
 intro: 'Create modular automations that you can share and reuse across {% data variables.product.prodname_actions %} workflows.'
 versions:
   fpt: '*'
-  ghes: '*'
+  ghes: *
   ghec: '*'
 redirect_from:
   - /actions/creating-actions
